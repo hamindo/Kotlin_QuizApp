@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string name="question">질문</string> <!-- question은 질문테스트뷰에 쓰임 -->
+    <string name="count_label">%d/%d</string> <!-- count_label은 현재퀴즈가 몇번째인지 알려주기 위해 쓰임 -->
+    <string name="submit">%s</string> <!-- submit은 질문 확인 버튼에 쓰임 -->
+
+</resources>
