@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var selectedOption: Int = 0   //선택 답변 값을 담을 변수
     private var score: Int = 0           //점수를 담을 변수
 
-    private lateinit var questionList: ArrayList<Question>
+    private lateinit var questionList: List<Question>
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             setContentView(binding.root)
 
             //질문 리스트 가져오기
-            questionList = QuestionData.getQuestion()
+            questionList = QuestionData.getRandomQuestions()
             //questionList에 우리가 샘플로 만든 데이터 넣음
 
             //화면 셋팅
@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.option2Text.setOnClickListener(this)
             binding.option3Text.setOnClickListener(this)
             binding.option4Text.setOnClickListener(this)
+            binding.option5Text.setOnClickListener(this)
 
             //답변 체크 이벤트
             binding.submitBtn.setOnClickListener {
@@ -96,6 +97,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             2 -> binding.option2Text.background = ContextCompat.getDrawable(this, color)
             3 -> binding.option3Text.background = ContextCompat.getDrawable(this, color)
             4 -> binding.option4Text.background = ContextCompat.getDrawable(this, color)
+            5 -> binding.option5Text.background = ContextCompat.getDrawable(this, color)
 
         }
     }
@@ -145,11 +147,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //questionText에는 question값을 넣음
 
         //답변 표시
-        binding.option1Text.text = question.option_one
-        binding.option2Text.text = question.option_two
-        binding.option3Text.text = question.option_three
-        binding.option4Text.text = question.option_four
-        //각 답변 1~4의 텍스트뷰에 question의 옵션 1~4의 값이 들어감.
+        binding.option1Text.text = question.options[0]
+        binding.option2Text.text = question.options[1]
+        binding.option3Text.text = question.options[2]
+        binding.option4Text.text = question.options[3]
+        binding.option5Text.text = question.options[4]
+        //각 답변 1~5의 텍스트뷰에 question의 옵션 1~5의 값이 들어감.
 
         setSubmitBtn("제출")
     }
@@ -172,6 +175,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         optionList.add(binding.option2Text)
         optionList.add(binding.option3Text)
         optionList.add(binding.option4Text)
+        optionList.add(binding.option5Text)
 
         //답변 텍스트뷰 설정
         for(op in optionList){
@@ -206,6 +210,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.option2_text -> selectedOptionStyle(binding.option2Text, 2)
             R.id.option3_text -> selectedOptionStyle(binding.option3Text, 3)
             R.id.option4_text -> selectedOptionStyle(binding.option4Text, 4)
+            R.id.option5_text -> selectedOptionStyle(binding.option5Text, 5)
         }
     }
 }

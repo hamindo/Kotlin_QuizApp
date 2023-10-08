@@ -1,5 +1,5 @@
 package com.example.myapplication
-
+/*
 data class Question(
     var id: Int,
     var question: String,
@@ -7,7 +7,17 @@ data class Question(
     var option_two: String,
     var option_three: String,
     var option_four: String,
+    var option_five: String,
     var correct_answer: Int
 )
 //Quiz 클래스 Question.kt
 // id와 question(퀴즈 문제 담는 변수), option one~four(답변1~4 담는 변수), correct_answer(정답 번호 담는 변수)
+
+ */
+
+data class Question(
+    var id: String,
+    var question: String,
+    var correct_answer:Int,
+    val options: List<String >
+)
