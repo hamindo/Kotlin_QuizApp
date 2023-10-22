@@ -15,80 +15,89 @@ import androidx.core.content.ContextCompat
 import com.example.myapplication.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 
+// MainActivity.kt 파일 밖에서 전역 함수로 정의
+fun getQuestionData() {
+    // 이 함수 내용을 여기에 복사
+}
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
 
-    private var currentPosition: Int = 1   //현재 몇번쨰 문제인지를 담을 변수
+    private var currentPosition: Int = 1   //현재 몇 번째 문제인지를 담을 변수
     private var selectedOption: Int = 0   //선택 답변 값을 담을 변수
     private var score: Int = 0           //점수를 담을 변수
 
     private lateinit var questionList: List<Question>
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            //질문 리스트 가져오기
-            questionList = QuestionData.getRandomQuestions()
-            //questionList에 우리가 샘플로 만든 데이터 넣음
+        // 화면 설정
+        getQuestionData()
 
-            //화면 셋팅
-            getQuestionData()
+        binding.option1Text.setOnClickListener(this)
+        binding.option2Text.setOnClickListener(this)
+        binding.option3Text.setOnClickListener(this)
+        binding.option4Text.setOnClickListener(this)
+        binding.option5Text.setOnClickListener(this)
 
-            binding.option1Text.setOnClickListener(this)
-            binding.option2Text.setOnClickListener(this)
-            binding.option3Text.setOnClickListener(this)
-            binding.option4Text.setOnClickListener(this)
-            binding.option5Text.setOnClickListener(this)
+        // 답변 체크 이벤트
+        binding.submitBtn.setOnClickListener {
+            if (selectedOption != 0) {
+                val question = questionList[currentPosition - 1]
 
-            //답변 체크 이벤트
-            binding.submitBtn.setOnClickListener {
+                val questionLevelActivity = QuestionLevelActivity() // QuestionLevelActivity 인스턴스 생성
+                val levelSelectedOption = questionLevelActivity.getLevelSelectedOption()
 
-                if(selectedOption != 0){
+                // 여기서 levelselectedOption를 직접 접근하지 않고
+                // QuestionLevelActivity 클래스의 getLevelSelectedOption 함수를 사용합니다.
+                when (levelSelectedOption) {
+                    1 -> questionList = QuestionData1.getRandomQuestions()
+                    2 -> questionList = QuestionData2.getRandomQuestions()
+                    3 -> questionList = QuestionData3.getRandomQuestions()
+                }
 
-                    val question = questionList[currentPosition-1]
+                // 정답 체크(선택 답변과 정답을 비교)
+                if (selectedOption != question.correct_answer) {
+                    // 오답 처리
+                    setColor(selectedOption, R.drawable.wrong_option_background)
+                    callDialog("오답", "정답 ${question.correct_answer}")
+                } else {
+                    score++
+                }
+                setColor(question.correct_answer, R.drawable.correct_option_background)
 
-                    //정답 체크(선택 답변과 정답을 비교)
-                    if(selectedOption != question.correct_answer) { //오답
-                        setColor(selectedOption, R.drawable.wrong_option_background)
-                        callDialog("오답", "정답 ${question.correct_answer}")
-                    }else{
-                        score++
+                if (currentPosition == questionList.size) {
+                    binding.submitBtn.text = getString(R.string.submit, "끝")
+                } else {
+                    binding.submitBtn.text = getString(R.string.submit, "다음")
+                }
+            } else {
+                // 위치값 상승
+                currentPosition++
+                when {
+                    // 전체 문제 숫자가 현재 위치보다 크면 다음 문제로 설정
+                    currentPosition <= questionList.size -> {
+                        // 다음 문제 설정
+                        getQuestionData()
                     }
-                    setColor(question.correct_answer, R.drawable.correct_option_background)
 
-                    if(currentPosition == questionList.size){
-                        binding.submitBtn.text = getString(R.string.submit, "끝")
-                    }else{
-                        binding.submitBtn.text = getString(R.string.submit, "다음")
-                    }
-                }else{
-                    //위치값 상승
-                    currentPosition++
-                    when{
-                        //전체 문제 숫자가 현재 위치보다 크면 다음 문제로 셋팅
-                        currentPosition <= questionList.size -> {
-                            //다음 문제 셋팅
-                            getQuestionData()
-                        }
-
-                        else ->{
-                            //결과 액티비티로 넘어가는 코드
-                            val intent = Intent(this@MainActivity, ResultActivity::class.java)
-                            intent.putExtra("score", score)
-                            intent.putExtra("totalSize", questionList.size)
-                             startActivity(intent)
-                            finish()
-                        }
+                    else -> {
+                        // 결과 액티비티로 이동
+                        val intent = Intent(this@MainActivity, ResultActivity::class.java)
+                        intent.putExtra("score", score)
+                        intent.putExtra("totalSize", questionList.size)
+                        startActivity(intent)
+                        finish()
                     }
                 }
-                //선택값 초기화
-                selectedOption = 0
-            }//submitBtn
-        }//onCreate
-
-    /**  9.17 일 여기부터 확인함
+            }
+            // 선택값 초기화
+            selectedOption = 0
+        }
+    }
+    /**
      * 답변 배경색상 변경
      */
     private fun setColor(opt: Int, color: Int){
@@ -110,11 +119,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             .setTitle(alertTitle)
             .setMessage("정답: $correctAnswer")
             .setPositiveButton("OK"){
-                dialogInterface, i ->
+                    dialogInterface, i ->
                 dialogInterface.dismiss() //창 닫기
             }
-            .setCancelable(false)
-            .show()
+        
+            //오답 알림창 삭제
+            //.setCancelable(false)
+            //.show()
     }
 
     /**
@@ -212,5 +223,4 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.option4_text -> selectedOptionStyle(binding.option4Text, 4)
             R.id.option5_text -> selectedOptionStyle(binding.option5Text, 5)
         }
-    }
-}
+    }}

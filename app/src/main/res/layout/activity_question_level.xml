@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/question"
-            android:textSize="18sp"
+            android:text="원하는 난이도를 선택하세요"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -31,91 +31,50 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-
-            <!-- 질문 바로 밑 부분. 현재위치 보여주는 ProgressBar-->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:max="5"
-                android:progress="0" />
-
-            <!-- 몇번째문제 / 총문제수 (%d/%d부분) 보여줄  TextView -->
-            <TextView
-                android:id="@+id/progress_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/count_label"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/option1_text"
+            android:id="@+id/level1_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/option_background"
             android:gravity="center"
             android:padding="10dp"
-            android:text="답변1"
+            android:text="상"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/option2_text"
+            android:id="@+id/level2_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/option_background"
             android:gravity="center"
             android:padding="10dp"
-            android:text="답변2"
+            android:text="중"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/option3_text"
+            android:id="@+id/level3_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/option_background"
             android:gravity="center"
             android:padding="10dp"
-            android:text="답변3"
+            android:text="하"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/option4_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/option_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="답변4"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/option5_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/option_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="답변5"
-            android:textSize="20sp" />
         <!-- ctrl + alt + L 로 코드정렬-->
 
         <!-- 답변을 선택하고 그 답변이 정답이 맞는지 체크하는 기능을 하는 Button. 정답 확인 후에는 '다음' 버튼으로 변경됨 -->
         <Button
-            android:id="@+id/submit_btn"
+            android:id="@+id/choice_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/submit"
+            android:layout_marginTop="70dp"
+            android:text="선택"
             android:textSize="20sp"
             android:textStyle="bold" />
 

@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     //성공 시 실행
                     val intent: Intent = Intent(this@LoginActivity,
-                        MainActivity::class.java)
+                        QuestionLevelActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                     finish()

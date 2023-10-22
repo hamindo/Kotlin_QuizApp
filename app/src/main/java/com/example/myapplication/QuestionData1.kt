@@ -43,16 +43,13 @@ package com.example.myapplication
 */
 
 
-import kotlin.random.Random
-
-
-object QuestionData {
+object QuestionData1 {
     fun getRandomQuestions(): List<Question> {
         val allQuestions = listOf(
             // SCM 1 공급사슬의이해
             Question(
                 "rd0Rro12gXh",
-                "공급사슬의 목적은 무엇인가요?",
+                "1공급사슬의 목적은 무엇인가요?",
                 3,
                 //"공급사슬 전체의 가치를 극대화하기 위해"
                 listOf(
@@ -65,7 +62,7 @@ object QuestionData {
             ),
             Question(
                 "YmhmXLqyuhq",
-                "공급사슬이란 무엇인가요?",
+                "1공급사슬이란 무엇인가요?",
                 1,
                 //"고객의 요구를 충족시키기 위한 모든 단계를 말합니다."
                 listOf(
@@ -78,7 +75,7 @@ object QuestionData {
             ),
             Question(
                 "rc5KN0B-N2b",
-                "공급사슬 수익성이란 무엇인가요?",
+                "1공급사슬 수익성이란 무엇인가요?",
                 3,
                 //"고객으로부터 발생하는 수입과 총 비용과의 차이를 의미합니다."
                 listOf(
@@ -91,7 +88,7 @@ object QuestionData {
             ),
             Question(
                 "Mk66iak-hmI",
-                "공급사슬 수익성을 극대화하기 위해 노력하는 이유는 무엇인가요?",
+                "1공급사슬 수익성을 극대화하기 위해 노력하는 이유는 무엇인가요?",
                 5,
                 //"공급사슬 전체의 가치를 극대화하기 위해"
                 listOf(
@@ -104,7 +101,7 @@ object QuestionData {
             ),
             Question(
                 "dCLY7cddZyn",
-                "공급사슬 수익성이란 무엇을 의미하나요?",
+                "1공급사슬 수익성이란 무엇을 의미하나요?",
                 3,
                 //"고객으로부터 발생하는 수입과 총 비용 과의 차이를 의미합니다."
                 listOf(
@@ -1039,7 +1036,7 @@ object QuestionData {
 }
 
 fun main() {
-    val questions = QuestionData.getRandomQuestions()
+    val questions = QuestionData1.getRandomQuestions()
     for (question in questions) {
         println("Question: ${question.question}")
         println("Options:")
