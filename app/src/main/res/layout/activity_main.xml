@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,6 +15,7 @@
         android:orientation="vertical"
         android:padding="10dp"
         tools:context=".MainActivity">
+
 
         <!-- 질문이 보여질 텍스트뷰-->
         <TextView

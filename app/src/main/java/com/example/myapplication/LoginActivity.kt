@@ -11,9 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-
     lateinit var binding: ActivityLoginBinding
-
     lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
 
         //인증 초기화
         mAuth = Firebase.auth
-
         //로그인 버튼 이벤트
         binding.loginBtn.setOnClickListener {
 
@@ -31,17 +28,13 @@ class LoginActivity : AppCompatActivity() {
 
             login(email, password)
         }
-
-
         //회원가입 버튼 이벤트
         binding.signUpBtn.setOnClickListener {
             val intent: Intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
     }
-    /**
-     *  로그인
-     */
+    //로그인
     private fun login(email: String, password: String){
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->

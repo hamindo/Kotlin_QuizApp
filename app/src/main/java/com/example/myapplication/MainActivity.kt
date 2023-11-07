@@ -15,49 +15,32 @@ import androidx.core.content.ContextCompat
 import com.example.myapplication.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 
-// MainActivity.kt 파일 밖에서 전역 함수로 정의
-fun getQuestionData() {
-    // 이 함수 내용을 여기에 복사
-}
+//MainActivity.kt 코드
+
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
-
     private var currentPosition: Int = 1   //현재 몇 번째 문제인지를 담을 변수
     private var selectedOption: Int = 0   //선택 답변 값을 담을 변수
     private var score: Int = 0           //점수를 담을 변수
-
     private lateinit var questionList: List<Question>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //선택한 난이도를 가져오기
+        val selectedLevel = intent.getIntExtra("selectedLevel", 0)
         // 화면 설정
-        getQuestionData()
-
+        getQuestionData(selectedLevel)
         binding.option1Text.setOnClickListener(this)
         binding.option2Text.setOnClickListener(this)
         binding.option3Text.setOnClickListener(this)
         binding.option4Text.setOnClickListener(this)
         binding.option5Text.setOnClickListener(this)
-
         // 답변 체크 이벤트
         binding.submitBtn.setOnClickListener {
             if (selectedOption != 0) {
                 val question = questionList[currentPosition - 1]
-
-                val questionLevelActivity = QuestionLevelActivity() // QuestionLevelActivity 인스턴스 생성
-                val levelSelectedOption = questionLevelActivity.getLevelSelectedOption()
-
-                // 여기서 levelselectedOption를 직접 접근하지 않고
-                // QuestionLevelActivity 클래스의 getLevelSelectedOption 함수를 사용합니다.
-                when (levelSelectedOption) {
-                    1 -> questionList = QuestionData1.getRandomQuestions()
-                    2 -> questionList = QuestionData2.getRandomQuestions()
-                    3 -> questionList = QuestionData3.getRandomQuestions()
-                }
-
                 // 정답 체크(선택 답변과 정답을 비교)
                 if (selectedOption != question.correct_answer) {
                     // 오답 처리
@@ -80,7 +63,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     // 전체 문제 숫자가 현재 위치보다 크면 다음 문제로 설정
                     currentPosition <= questionList.size -> {
                         // 다음 문제 설정
-                        getQuestionData()
+                        getQuestionData(selectedLevel)
                     }
 
                     else -> {
@@ -89,7 +72,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         intent.putExtra("score", score)
                         intent.putExtra("totalSize", questionList.size)
                         startActivity(intent)
-                        finish()
+                        //finish()
                     }
                 }
             }
@@ -131,10 +114,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     /**
      * 문제 셋팅
      */
-    private fun getQuestionData(){
+    private fun getQuestionData(selectedLevel: Int){
 
         //답변 설정 초기화
         setOptionStyle()
+
+        questionList = when (selectedLevel) {
+            1 -> QuestionData1.getRandomQuestions()
+            2 -> QuestionData2.getRandomQuestions()
+            3 -> QuestionData3.getRandomQuestions()
+            else -> emptyList() // 선택한 난이도에 해당하는 데이터가 없는 경우 빈 리스트 반환
+        }
+
+
 
         //질문 변수에 담기
         val question = questionList[currentPosition-1]
@@ -167,6 +159,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         setSubmitBtn("제출")
     }
+
+
 
     //제출 버튼 텍스트 설정
     private fun setSubmitBtn(name: String){
